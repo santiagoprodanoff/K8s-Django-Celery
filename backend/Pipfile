@@ -5,6 +5,11 @@ name = "pypi"
 
 [packages]
 django = "*"
+ipython = "*"
+pillow = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+celery = "*"
 
 [dev-packages]
 pdbpp = "*"
