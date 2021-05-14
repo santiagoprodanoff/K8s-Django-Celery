@@ -1,25 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: django
+  name: celery-worker
   labels:
-    app: django
+    deployment: celery-worker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: django-container
+      pod: celery-worker
   template:
     metadata:
       labels:
-        app: django-container
+        pod: celery-worker
     spec:
       containers:
-        - name: django-web
+        - name: celery-worker
           image: k8s_django_celery
           imagePullPolicy: Never
-          ports:
-            - containerPort: 8000
+          command: ['celery', '-A', 'backend', 'worker', '-l', 'INFO']
           env:
             - name: POSTGRES_USER
               valueFrom:

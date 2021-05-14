@@ -1,25 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: django
+  name: celery-beat
   labels:
-    app: django
+    deployment: celery-beat
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: django-container
+      pod: celery-beat
   template:
     metadata:
       labels:
-        app: django-container
+        pod: celery-beat
     spec:
       containers:
-        - name: django-web
+        - name: celery-beat
           image: k8s_django_celery
           imagePullPolicy: Never
-          ports:
-            - containerPort: 8000
+          command: ['celery', '-A', 'backend', 'beat', '-l', 'DEBUG']
           env:
             - name: POSTGRES_USER
               valueFrom:

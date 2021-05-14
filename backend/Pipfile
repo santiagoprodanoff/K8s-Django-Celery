@@ -9,7 +9,9 @@ ipython = "*"
 pillow = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
-celery = "*"
+celery = "==4.4.7"
+redis = "*"
+flower = "==0.9.5"
 
 [dev-packages]
 pdbpp = "*"

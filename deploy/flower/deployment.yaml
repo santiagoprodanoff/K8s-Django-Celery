@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flower
+  labels:
+    deployment: flower
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: celery-flower
+  template:
+    metadata:
+      labels:
+        pod: celery-flower
+    spec:
+      containers:
+      - name: flower
+        image: k8s_django_celery
+        imagePullPolicy: Never
+        command: ['celery', 'flower', '-A', 'backend']
+        ports:
+          - containerPort: 5555
+        env:
+          - name: REDIS_HOST
+            value: redis-service
+          - name: REDIS_PORT
+            value: '6379'
+        resources:
+          limits:
+            cpu: 100m
